@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>田文瑞 | 机器人算法工程师</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#0a0e27;color:#e0e0e0;line-height:1.6}
+  a{color:#64b5f6;text-decoration:none}
+  .container{max-width:1000px;margin:0 auto;padding:0 20px}
+
+  /* Hero */
+  .hero{text-align:center;padding:80px 20px 50px;background:linear-gradient(135deg,#0a0e27 0%,#1a1f3a 50%,#0d1b3e 100%);position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 50% 30%,rgba(100,181,246,0.08) 0%,transparent 60%)}
+  .hero h1{font-size:3em;font-weight:700;letter-spacing:2px;background:linear-gradient(135deg,#64b5f6,#42a5f5,#1e88e5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative}
+  .hero .subtitle{font-size:1.3em;color:#90a4ae;margin-top:10px;font-weight:300}
+  .hero .contact-info{margin-top:20px;display:flex;justify-content:center;gap:25px;flex-wrap:wrap;font-size:0.95em;color:#78909c}
+  .hero .contact-info span{display:flex;align-items:center;gap:6px}
+
+  /* Section */
+  .section{padding:50px 0}
+  .section h2{font-size:1.8em;font-weight:600;color:#64b5f6;margin-bottom:30px;display:flex;align-items:center;gap:10px}
+  .section h2::before{content:'';display:block;width:4px;height:28px;background:linear-gradient(180deg,#64b5f6,#1e88e5);border-radius:2px}
+
+  /* Cards */
+  .card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:24px;margin-bottom:20px;transition:border-color .3s,transform .3s}
+  .card:hover{border-color:rgba(100,181,246,0.3);transform:translateY(-2px)}
+  .card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+  .card-title{font-size:1.15em;font-weight:600;color:#e3f2fd}
+  .card-role{color:#90a4ae;font-size:0.9em}
+  .card-date{color:#607d8b;font-size:0.85em;white-space:nowrap}
+  .card-summary{font-size:0.95em;color:#b0bec5;margin-bottom:10px;padding-left:12px;border-left:3px solid #1e88e5;font-weight:600}
+  .card-bullets{list-style:none;padding:0}
+  .card-bullets li{padding:5px 0 5px 18px;position:relative;font-size:0.9em;color:#cfd8dc}
+  .card-bullets li::before{content:'▸';position:absolute;left:0;color:#64b5f6}
+  .card-bullets li strong{color:#e3f2fd}
+  .card-bullets li b{color:#e3f2fd}
+
+  /* Certificates */
+  .cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+  .cert-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;overflow:hidden;transition:all .3s}
+  .cert-card:hover{border-color:rgba(100,181,246,0.3);transform:translateY(-3px);box-shadow:0 8px 30px rgba(100,181,246,0.1)}
+  .cert-img{width:100%;display:block;border-radius:8px 8px 0 0}
+  .cert-info{padding:10px 14px}
+  .cert-info h3{font-size:0.9em;color:#e3f2fd;text-align:center}
+
+  /* Videos */
+  .video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+  .video-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;overflow:hidden;transition:all .3s}
+  .video-card:hover{border-color:rgba(100,181,246,0.3)}
+  .video-card video{width:100%;display:block;background:#000}
+  .video-info{padding:14px}
+  .video-info h3{font-size:0.95em;color:#e3f2fd;margin-bottom:4px}
+  .video-info p{font-size:0.8em;color:#78909c}
+
+  /* Skills */
+  .skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+  .skill-item{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px}
+  .skill-item h3{font-size:0.9em;color:#64b5f6;margin-bottom:8px;font-weight:600}
+  .skill-item p{font-size:0.85em;color:#b0bec5}
+
+  /* Modal */
+  .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:1000;justify-content:center;align-items:center;flex-direction:column}
+  .modal.active{display:flex}
+  .modal-close{position:absolute;top:20px;right:30px;font-size:2em;color:#fff;cursor:pointer;z-index:1001;transition:color .3s}
+  .modal-close:hover{color:#64b5f6}
+  .modal iframe{width:90%;max-width:800px;height:85%;border:none;border-radius:8px}
+  .modal-title{color:#e3f2fd;font-size:1.1em;margin-top:10px}
+
+  /* Resume button */
+  .resume-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1e88e5,#1565c0);color:#fff;padding:12px 28px;border-radius:8px;font-size:1em;font-weight:600;cursor:pointer;border:none;transition:transform .3s,box-shadow .3s;margin-top:25px}
+  .resume-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(30,136,229,0.3)}
+
+  /* Education */
+  .edu-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+  .edu-card h3{font-size:1.05em;color:#e3f2fd;margin-bottom:4px}
+  .edu-card p{color:#90a4ae;font-size:0.9em}
+
+  footer{text-align:center;padding:30px 20px;color:#455a64;font-size:0.85em;border-top:1px solid rgba(255,255,255,0.04)}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>田文瑞</h1>
+  <p class="subtitle">机器人算法工程师 | VLA大模型 | Sim2Real部署</p>
+  <div class="contact-info">
+    <span>&#9742; 151-3544-6988</span>
+    <span>&#9993; 2907839221@qq.com</span>
+    <span>&#127874; 2000.07</span>
+  </div>
+  <button class="resume-btn" onclick="openModal('简历_一页.pdf','个人简历')">查看完整简历</button>
+</div>
+
+<!-- Education -->
+<div class="section container">
+  <h2>教育背景</h2>
+  <div class="edu-card">
+    <h3>武汉大学 · 机械（硕士在读）</h3>
+    <p>2024.09 - 至今</p>
+  </div>
+  <div class="edu-card">
+    <h3>东华大学 · 机械工程（本科）</h3>
+  </div>
+</div>
+
+<!-- Experience -->
+<div class="section container">
+  <h2>实习经历</h2>
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">华为技术有限公司（车BU）</div>
+        <div class="card-role">机器人算法实习生</div>
+      </div>
+      <div class="card-date">2026.06 - 2026.09</div>
+    </div>
+    <div class="card-summary">核心产出：完成5k+条人类演示数据模态转换，RoboCasa Benchmark任务成功率达74.3%。</div>
+    <ul class="card-bullets">
+      <li><b>项目一：Ego-to-Robot 数据处理 Infra</b> — 基于Qwen-VLM完成视频打标→WiLoR提取人手姿态→SAM3D实现物体三维重建→FoundationPose跟踪物体6D位姿→采用B-spline平滑关键帧、BODex生成并筛选最优抓取姿态→在SAPIEN仿真复现完整机器人操作轨迹；完成<b>5k+条</b>人类演示数据的模态转换，整体转化成功率<b>50%+</b>。</li>
+      <li><b>项目二：基于Fast-WAM的通用机器人操作世界模型构建</b> — 融合RoboCasa、GR1与EgoDex搭建人机混合数据集，完成数据清洗、时序对齐、人-机位姿转换及语言指令补全；扩展实现Joint原生关节、借鉴Qwen-RobotManip的80维语义插槽两套动作表征，利用Padding+掩码实现异构动作统一；采用视频扩散+Flow-Matching联合损失，对比混合训练与预训练-微调两种方案，以仿真任务成功率为核心指标，试验不同规模、比例数据集模型泛化效果。</li>
+      <li>在<b>RoboCasa仿真Benchmark</b>上取得<b>74.3%</b>平均任务成功率，验证新物体泛化下拾取放置的语义感知能力。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Projects -->
+<div class="section container">
+  <h2>科研与项目经历</h2>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">基于QwenVL2.5的坐标中心对齐VLA框架（MonoPlan）</div>
+        <div class="card-role">核心研究员</div>
+      </div>
+      <div class="card-date">2026.03 - 至今</div>
+    </div>
+    <div class="card-summary">解决痛点：针对同质物体交互下VLA模型决策犹豫、定位精度差问题，提出显式空间网格对齐框架。</div>
+    <ul class="card-bullets">
+      <li><b>空间对齐机制创新</b>：设计10×10显式空间网格与概率软选择机制，输出100维坐标概率分布；在歧义指令下实现<b>98%无冲突选择</b>，彻底消除决策犹豫，推理速度提升<b>40%</b>。</li>
+      <li><b>两阶段训练策略</b>：语言规划阶段利用1200+组桌面数据训练规划头（位置理解准确率99%）；视觉动作精调阶段融合语言与坐标特征，借助KV Cache生成精细动作序列。</li>
+      <li><b>性能突破</b>：任务成功率稳定<b>80%+</b>；相较基线IsaacGr00t，整体准确率提升<b>35%+</b>，同质物体选择准确率提升<b>50%+</b>。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">基于Isaac Sim的Franka机械臂桌面清理系统</div>
+        <div class="card-role">项目负责人</div>
+      </div>
+      <div class="card-date">2025.10 - 2026.03</div>
+    </div>
+    <div class="card-summary">成果：斩获竞赛总成绩第三名，实现20Hz高频视觉动作实时对齐。</div>
+    <ul class="card-bullets">
+      <li><b>高保真仿真环境搭建</b>：基于USD层级化架构与RMPflow算法构建全流程状态机，控制延迟&lt;50ms，帧率稳定40FPS；采集560帧双视角图像及25万+ state-action序列，标准化转换为<b>1.2GB LeRobot数据集</b>。</li>
+      <li><b>VLA大模型微调部署</b>：基于H200显卡全量微调N1.5-3B参数模型（Batch=16，单轮4h）；采用Server-Client架构部署，服务响应300ms，桌面清理平均成功率≥<b>70%</b>。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">星海图轮式人形机器人仿真与Sim2Real部署（华为2012实验室）</div>
+        <div class="card-role">算法开发</div>
+      </div>
+      <div class="card-date">2025.07 - 2025.10</div>
+    </div>
+    <ul class="card-bullets">
+      <li><b>Sim2Real全链路打通</b>：整定20+关节刚度/阻尼参数，构建15+ ROS通信节点，仿真与现实通信延迟&lt;10ms；基于Diffusion Policy训练端到端抓取策略，仿真成功率<b>95%+</b>，实机部署推理频率稳定<b>20Hz</b>。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">IsaacGym灵巧手转魔方操作学习</div>
+        <div class="card-role">核心开发</div>
+      </div>
+      <div class="card-date">2024.09 - 2025.05</div>
+    </div>
+    <ul class="card-bullets">
+      <li><b>仿真训练架构</b>：搭建4096个并行IsaacGym仿真环境，控制频率稳定60Hz，保障灵巧手精细操作实时性。</li>
+      <li><b>教师模型训练</b>：基于环境特权位姿观测，使用PPO算法训练教师策略模型，累计训练40+小时收敛；标准场景魔方操作成功率99%。</li>
+      <li><b>学生模型训练</b>：引入在线Dragger引导交互，仅用3分钟仿真实现快速收敛；学生模型以视觉图像、触觉点云双模态为输入，经预训练多模态编码器提取CLS Token，融合机器人状态输入LSTM时序策略网络；通过MSE损失在线训练对齐专家动作，最终学生模型实现95%+操作成功率。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Skills -->
+<div class="section container">
+  <h2>专业技能</h2>
+  <div class="skill-grid">
+    <div class="skill-item">
+      <h3>仿真平台</h3>
+      <p>精通 Isaac Gym / Isaac Sim / SAPIEN / MuJoCo，熟悉 USD 格式与 RMPflow 运动规划</p>
+    </div>
+    <div class="skill-item">
+      <h3>算法框架</h3>
+      <p>PyTorch, Transformers, Diffusion Policy, PPO, VLA (Qwen-VL), Flow Matching, LSTM</p>
+    </div>
+    <div class="skill-item">
+      <h3>机器人系统</h3>
+      <p>ROS/ROS2, C++/Python, Linux, Git, Docker, TensorRT 部署</p>
+    </div>
+    <div class="skill-item">
+      <h3>英语能力</h3>
+      <p>CET-6</p>
+    </div>
+  </div>
+</div>
+
+<!-- Certificates -->
+<div class="section container">
+  <h2>荣誉证书</h2>
+  <div class="cert-grid">
+    <div class="cert-card">
+      <img src="证书/2024-2025优秀研究生_01_web.jpg" class="cert-img" alt="2024-2025优秀研究生" loading="lazy">
+      <div class="cert-info">
+        <h3>2024-2025优秀研究生</h3>
+      </div>
+    </div>
+    <div class="cert-card">
+      <img src="证书/2025优秀学业奖学金二等奖_01_web.jpg" class="cert-img" alt="2025优秀学业奖学金二等奖" loading="lazy">
+      <div class="cert-info">
+        <h3>2025优秀学业奖学金二等奖</h3>
+      </div>
+    </div>
+    <div class="cert-card">
+      <img src="证书/RAICOM一等奖_01_web.jpg" class="cert-img" alt="RAICOM一等奖" loading="lazy">
+      <div class="cert-info">
+        <h3>RAICOM一等奖</h3>
+      </div>
+    </div>
+    <div class="cert-card">
+      <img src="证书/美赛国际一等奖_01_web.jpg" class="cert-img" alt="美赛国际一等奖" loading="lazy">
+      <div class="cert-info">
+        <h3>美赛国际一等奖</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Videos -->
+<div class="section container">
+  <h2>项目演示视频</h2>
+  <div class="video-grid">
+    <div class="video-card">
+      <video controls preload="none" src="证书/mono_web.mp4"></video>
+      <div class="video-info">
+        <h3>MonoPlan 空间对齐VLA框架</h3>
+        <p>坐标中心对齐，同质物体精准选择</p>
+      </div>
+    </div>
+    <div class="video-card">
+      <video controls preload="none" src="证书/table_web.mp4"></video>
+      <div class="video-info">
+        <h3>Franka机械臂桌面清理系统</h3>
+        <p>基于Isaac Sim + VLA大模型微调部署</p>
+      </div>
+    </div>
+    <div class="video-card">
+      <video controls preload="none" src="证书/fastwam_web2.mp4"></video>
+      <div class="video-info">
+        <h3>Fast-WAM 通用操作世界模型</h3>
+        <p>RoboCasa Benchmark 74.3%任务成功率</p>
+      </div>
+    </div>
+    <div class="video-card">
+      <video controls preload="none" src="证书/egodex_web.mp4"></video>
+      <div class="video-info">
+        <h3>Ego-to-Robot 数据处理</h3>
+        <p>5k+条人类演示数据模态转换</p>
+      </div>
+    </div>
+    <div class="video-card">
+      <video controls preload="none" src="证书/r1pro_web.mp4"></video>
+      <div class="video-info">
+        <h3>星海图R1Pro轮式人形机器人</h3>
+        <p>华为2012实验室 Sim2Real全链路部署</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>田文瑞 | 机器人算法工程师 &copy; 2026</p>
+</footer>
+
+<!-- Modal -->
+<div class="modal" id="pdfModal">
+  <span class="modal-close" onclick="closeModal()">&times;</span>
+  <iframe id="modalFrame" src=""></iframe>
+  <p class="modal-title" id="modalTitle"></p>
+</div>
+
+<script>
+function openModal(path, title){
+  document.getElementById('modalFrame').src = path;
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('pdfModal').classList.add('active');
+}
+function closeModal(){
+  document.getElementById('pdfModal').classList.remove('active');
+  document.getElementById('modalFrame').src = '';
+}
+document.getElementById('pdfModal').addEventListener('click', function(e){
+  if(e.target === this) closeModal();
+});
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') closeModal();
+});
+</script>
+</body>
+</html>
